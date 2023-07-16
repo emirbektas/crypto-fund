@@ -12,6 +12,7 @@ export default function Home() {
           <li>asd</li>
           <li>asd</li>
         </ul>
+        <h3>deneme</h3>
       </div>
     </main>
   );
