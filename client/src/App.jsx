@@ -1,18 +1,16 @@
+import React from "react";
 import { ConnectWallet } from "@thirdweb-dev/react";
-import "./styles/Home.css";
+import { CampaignDetails, CreateCampaign, Profile, Home } from "./pages";
 
-export default function Home() {
+function App() {
   return (
-    <main className="main">
-      <div className="container">
-        <h1 className="text-xl text-red-500">deneme</h1>
-        <h2 className="text-green-900 text-5xl">42</h2>
-        <ul className="flex gap-10 justify-center">
-          <li>asd</li>
-          <li>asd</li>
-          <li>asd</li>
-        </ul>
+    <div className="relative sm:-8 p-4 bg-[#131318] min-h-screen flex flex-row">
+      <div className="sm:flex hidden mr-10 relative">Sidebar</div>
+      <div className="flex-1 max-sm:w-full max-w-[1280px] mx-auto sm:pr-5">
+        Navbar
       </div>
-    </main>
+    </div>
   );
 }
+
+export default App;
