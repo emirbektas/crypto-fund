@@ -1,4 +1,5 @@
 import React from "react";
+import { loader } from "../assets";
 
 function Loader() {
   return (
