@@ -12,7 +12,7 @@ const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
   const { contract } = useContract(
-    "0x4E8187f9755ddd006933f6944e35A8d98AbC4039"
+    "0xd684d3fDe0E261A08Ad7B5EE575a6C930fF6a60e"
   );
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
@@ -70,10 +70,9 @@ export const StateContextProvider = ({ children }) => {
   };
 
   const donate = async (pId, amount) => {
-    const data = await contract.call("donateToCampaign", pId, {
+    const data = await contract.call("donateToCampaign", [pId], {
       value: ethers.utils.parseEther(amount),
     });
-
     return data;
   };
 
