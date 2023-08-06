@@ -67,4 +67,18 @@ contract CryptoFund {
 
         return allCampaigns;
     }
+
+    function refundCampaign(uint256 _id) public {
+        Campaign storage campaign = campaigns[_id];
+        require(campaign.deadline < block.timestamp, "Campaign deadline has not passed yet.");
+
+        for (uint i = 0; i < campaign.donators.length; i++) {
+            address donator = campaign.donators[i];
+            uint256 donationAmount = campaign.donations[i];
+            (bool sent,) = payable(donator).call{value: donationAmount}("");
+            if(sent){
+                campaign.amountCollected = campaign.amountCollected - donationAmount;
+            }
+        }
+    }
 }

@@ -12,7 +12,7 @@ const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
   const { contract } = useContract(
-    "0xd684d3fDe0E261A08Ad7B5EE575a6C930fF6a60e"
+    "0x125e7F7C1dD7cf7afbAE478AeC6b8838401e621e"
   );
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
@@ -92,6 +92,15 @@ export const StateContextProvider = ({ children }) => {
     return parsedDonations;
   };
 
+  const refund = async (pId) => {
+    try {
+      const data = await contract.call("refundCampaign", [pId]);
+      console.log("refund call success", data);
+    } catch (error) {
+      console.log("refund call failure", error);
+    }
+  };
+
   return (
     <StateContext.Provider
       value={{
@@ -103,6 +112,7 @@ export const StateContextProvider = ({ children }) => {
         getUserCampaigns,
         donate,
         getDonations,
+        refund,
       }}
     >
       {children}
