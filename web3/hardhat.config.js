@@ -8,7 +8,7 @@ module.exports = {
     networks: {
       hardhat: {},
       sepolia: {
-        url: "https://rpc.ankr.com/eth_sepolia",
+        url: "https://sepolia.rpc.thirdweb.com",
         accounts: [`0x${process.env.PRIVATE_KEY}`],
       },
     },
@@ -17,20 +17,6 @@ module.exports = {
       optimizer: {
         enabled: true,
       },
-    },
-  },
-  networks: {
-    zksync_testnet: {
-      url: "https://zksync2-testnet.zksync.dev",
-      ethNetwork: "goerli",
-      chainId: 280,
-      zksync: true,
-    },
-    zksync_mainnet: {
-      url: "https://zksync2-mainnet.zksync.io/",
-      ethNetwork: "mainnet",
-      chainId: 324,
-      zksync: true,
     },
   },
   paths: {
