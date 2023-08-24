@@ -1,7 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
 import { Sepolia } from "@thirdweb-dev/chains";
 import "./styles/globals.css";
 import { StateContextProvider } from "./context";
@@ -11,14 +11,12 @@ import { StateContextProvider } from "./context";
 // You can also import additional chains from `@thirdweb-dev/chains` and pass them directly.
 // const activeChain = "ethereum";
 
-//deneme
-
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <ThirdwebProvider
-      activeChain={Sepolia}
+      activeChain={ChainId.Sepolia}
       clientId="a82c3a6dcea35d5623fc769446c4fdf3"
     >
       <StateContextProvider>
