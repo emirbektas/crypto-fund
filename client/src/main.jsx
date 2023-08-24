@@ -10,7 +10,6 @@ import { StateContextProvider } from "./context";
 // Change this to the chain your app is built for.
 // You can also import additional chains from `@thirdweb-dev/chains` and pass them directly.
 // const activeChain = "ethereum";
-// deneme
 
 const container = document.getElementById("root");
 const root = createRoot(container);
