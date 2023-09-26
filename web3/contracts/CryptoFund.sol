@@ -20,7 +20,7 @@ contract CryptoFund {
 
     function createCampaign(address _owner, string memory _title, string memory _description, uint256 _target, uint256 _deadline, string memory _image) public returns (uint256) {
         Campaign storage campaign = campaigns[numberOfCampaigns];
-
+        // Campaign, campaigns indexine saklanır.
 
         require(campaign.deadline < block.timestamp, "The deadline should be a date in the future");
 
@@ -54,6 +54,7 @@ contract CryptoFund {
 
     function getDonators(uint256 _id) view public returns (address[] memory, uint256[] memory)  {
         return (campaigns[_id].donators, campaigns[_id].donations);
+        //verilen indekse sahip kampanyanın donators ve donations dizisini döndürür.
     }
 
     function getCampaigns() public view returns (Campaign[] memory) {
