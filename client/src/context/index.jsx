@@ -11,9 +11,229 @@ import { EditionMetadataWithOwnerOutputSchema } from "@thirdweb-dev/sdk";
 
 const StateContext = createContext();
 
+export const contractAbi = [
+  {
+    type: "function",
+    name: "campaigns",
+    inputs: [
+      {
+        type: "uint256",
+        name: "",
+        internalType: "uint256",
+      },
+    ],
+    outputs: [
+      {
+        type: "address",
+        name: "owner",
+        internalType: "address",
+      },
+      {
+        type: "string",
+        name: "title",
+        internalType: "string",
+      },
+      {
+        type: "string",
+        name: "description",
+        internalType: "string",
+      },
+      {
+        type: "uint256",
+        name: "target",
+        internalType: "uint256",
+      },
+      {
+        type: "uint256",
+        name: "deadline",
+        internalType: "uint256",
+      },
+      {
+        type: "uint256",
+        name: "amountCollected",
+        internalType: "uint256",
+      },
+      {
+        type: "string",
+        name: "image",
+        internalType: "string",
+      },
+    ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "createCampaign",
+    inputs: [
+      {
+        type: "address",
+        name: "_owner",
+        internalType: "address",
+      },
+      {
+        type: "string",
+        name: "_title",
+        internalType: "string",
+      },
+      {
+        type: "string",
+        name: "_description",
+        internalType: "string",
+      },
+      {
+        type: "uint256",
+        name: "_target",
+        internalType: "uint256",
+      },
+      {
+        type: "uint256",
+        name: "_deadline",
+        internalType: "uint256",
+      },
+      {
+        type: "string",
+        name: "_image",
+        internalType: "string",
+      },
+    ],
+    outputs: [
+      {
+        type: "uint256",
+        name: "",
+        internalType: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "donateToCampaign",
+    inputs: [
+      {
+        type: "uint256",
+        name: "_id",
+        internalType: "uint256",
+      },
+    ],
+    outputs: [],
+    stateMutability: "payable",
+  },
+  {
+    type: "function",
+    name: "getCampaigns",
+    inputs: [],
+    outputs: [
+      {
+        type: "tuple[]",
+        name: "",
+        components: [
+          {
+            type: "address",
+            name: "owner",
+            internalType: "address",
+          },
+          {
+            type: "string",
+            name: "title",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "description",
+            internalType: "string",
+          },
+          {
+            type: "uint256",
+            name: "target",
+            internalType: "uint256",
+          },
+          {
+            type: "uint256",
+            name: "deadline",
+            internalType: "uint256",
+          },
+          {
+            type: "uint256",
+            name: "amountCollected",
+            internalType: "uint256",
+          },
+          {
+            type: "string",
+            name: "image",
+            internalType: "string",
+          },
+          {
+            type: "address[]",
+            name: "donators",
+            internalType: "address[]",
+          },
+          {
+            type: "uint256[]",
+            name: "donations",
+            internalType: "uint256[]",
+          },
+        ],
+        internalType: "struct CryptoFund.Campaign[]",
+      },
+    ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "getDonators",
+    inputs: [
+      {
+        type: "uint256",
+        name: "_id",
+        internalType: "uint256",
+      },
+    ],
+    outputs: [
+      {
+        type: "address[]",
+        name: "",
+        internalType: "address[]",
+      },
+      {
+        type: "uint256[]",
+        name: "",
+        internalType: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "numberOfCampaigns",
+    inputs: [],
+    outputs: [
+      {
+        type: "uint256",
+        name: "",
+        internalType: "uint256",
+      },
+    ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "refundCampaign",
+    inputs: [
+      {
+        type: "uint256",
+        name: "_id",
+        internalType: "uint256",
+      },
+    ],
+    outputs: [],
+    stateMutability: "nonpayable",
+  },
+];
+
 export const StateContextProvider = ({ children }) => {
   const { contract } = useContract(
-    "0xE8AC521e332B60D19afB71b4F7C12201cfAD1c56"
+    "0xE8AC521e332B60D19afB71b4F7C12201cfAD1c56",
+    contractAbi
   );
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
@@ -25,14 +245,16 @@ export const StateContextProvider = ({ children }) => {
 
   const publishCampaign = async (form) => {
     try {
-      const data = await createCampaign([
-        address, // owner
-        form.title, // title
-        form.description, // description
-        form.target,
-        new Date(form.deadline).getTime(), // deadline,
-        form.image,
-      ]);
+      const data = await createCampaign({
+        args: [
+          address, // owner
+          form.title, // title
+          form.description, // description
+          form.target,
+          new Date(form.deadline).getTime(), // deadline,
+          form.image,
+        ],
+      });
 
       console.log("contract call success", data);
     } catch (error) {
